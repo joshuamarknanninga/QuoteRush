@@ -94,19 +94,17 @@ npm --prefix client test -- --run
 
 
 ## Vite HMR WebSocket Troubleshooting
-This repo disables Vite HMR websocket by default to avoid repeated Chrome console errors in local environments that block WebSocket upgrades.
+To stop repeated Vite websocket errors in local Chrome DevTools, this project now runs client dev with HMR channel disabled.
 
-Current local dev behavior:
-- `npm --prefix client run dev` serves the app on `http://localhost:5173`
-- file changes are detected via polling watch
-- browser refresh is manual (no websocket HMR client)
+Current behavior:
+- Client runs on `http://127.0.0.1:5173`
+- Fast Refresh/HMR websocket is disabled
+- File watch polling is enabled
+- Manual browser refresh is required after code edits
 
-If you want to re-enable HMR websocket on a network that supports it, set:
-```js
-// in client/vite.config.js
-server: {
-  hmr: { protocol: 'ws', host: '127.0.0.1', clientPort: 5173 }
-}
+Start client with:
+```bash
+npm --prefix client run dev
 ```
 
 ## Deployment Notes (Render/Railway)
