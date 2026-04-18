@@ -6,7 +6,8 @@
     "install:all": "npm install && npm --prefix server install && npm --prefix client install",
     "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "test": "npm --prefix server test && npm --prefix client test -- --run",
-    "seed": "npm --prefix server run seed"
+    "seed": "npm --prefix server run seed",
+    "dev:reset": "bash -lc 'pkill -f \"node src/server.js\" >/dev/null 2>&1 || true; pkill -f \"vite preview\" >/dev/null 2>&1 || true; pkill -f \"vite build --watch\" >/dev/null 2>&1 || true; npm run dev'"
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

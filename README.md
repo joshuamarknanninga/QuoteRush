@@ -36,6 +36,10 @@ cp client/.env.example client/.env
 ```bash
 npm run dev
 ```
+If you suspect stale processes, use:
+```bash
+npm run dev:reset
+```
 - API: `http://localhost:5000`
 - Frontend (default stable mode): `http://localhost:4173`
 - Client default dev mode is websocket-free (stable mode), so refresh manually after edits.
@@ -108,7 +112,7 @@ If you want normal HMR on a machine where websocket works:
 npm --prefix client run dev:hmr
 ```
 
-If you previously had stuck browser tabs, close old tabs and reopen `http://localhost:4173`.
+If you previously had stuck browser tabs, close old tabs and reopen `http://localhost:4173`, or run `npm run dev:reset` to clear stale server/client processes first.
 
 Quick verification (should return nothing):
 ```bash
@@ -135,6 +139,7 @@ curl -s http://localhost:4173 | rg "@vite/client"
 Root:
 - `npm run install:all`
 - `npm run dev`
+- `npm run dev:reset`
 - `npm test`
 - `npm run seed`
 
