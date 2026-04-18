@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Prevent stale local Vite processes from serving old HMR-enabled sessions.
-pkill -f "vite.*--host localhost --port 5173" >/dev/null 2>&1 || true
-pkill -f "vite" >/dev/null 2>&1 || true
+HOST="${CLIENT_STABLE_HOST:-localhost}"
+PORT="${CLIENT_STABLE_PORT:-4173}"
+
+# Prevent stale local Vite preview processes from serving older sessions.
+pkill -f "vite preview --host ${HOST} --port ${PORT}" >/dev/null 2>&1 || true
 
 # Ensure dist is freshly generated before preview starts.
 npx vite build --mode development
@@ -18,4 +20,5 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-npx vite preview --host localhost --port 5173 --strictPort
+echo "QuoteRush client stable mode running at http://${HOST}:${PORT}"
+npx vite preview --host "$HOST" --port "$PORT" --strictPort

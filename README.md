@@ -37,7 +37,7 @@ cp client/.env.example client/.env
 npm run dev
 ```
 - API: `http://localhost:5000`
-- Frontend: `http://localhost:5173`
+- Frontend (default stable mode): `http://localhost:4173`
 - Client default dev mode is websocket-free (stable mode), so refresh manually after edits.
 
 ## Seed Demo Data
@@ -95,7 +95,7 @@ npm --prefix client test -- --run
 
 
 ## Vite HMR WebSocket Troubleshooting
-If your machine keeps failing Vite websocket (`[vite] failed to connect to websocket`), this repo now defaults to a websocket-free client dev flow.
+If your machine keeps failing Vite websocket (`[vite] failed to connect to websocket`), this repo now defaults to a websocket-free client dev flow on a different port than Vite HMR defaults.
 
 Default (`npm run dev`):
 - Runs one fresh `vite build` first, then `vite build --watch` + `vite preview` through `client/scripts/dev-stable.sh`
@@ -108,11 +108,11 @@ If you want normal HMR on a machine where websocket works:
 npm --prefix client run dev:hmr
 ```
 
-If you previously had stuck browser tabs, close old tabs and reopen `http://localhost:5173`.
+If you previously had stuck browser tabs, close old tabs and reopen `http://localhost:4173`.
 
 Quick verification (should return nothing):
 ```bash
-curl -s http://localhost:5173 | rg "@vite/client"
+curl -s http://localhost:4173 | rg "@vite/client"
 ```
 
 ## Deployment Notes (Render/Railway)
