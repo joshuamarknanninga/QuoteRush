@@ -120,7 +120,7 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - Set environment variables from `server/.env.example`.
 - Deploy `client` as Static Site with `npm run build` and publish `dist/`.
 - Configure `VITE_API_URL` in client environment to deployed API URL.
-- Ensure API CORS `CLIENT_URL` matches deployed frontend domain.
+- Ensure API CORS `CLIENT_URLS` (or `CLIENT_URL`) matches deployed frontend domain(s).
 
 ## Manual QA Checklist
 - Register and login.
