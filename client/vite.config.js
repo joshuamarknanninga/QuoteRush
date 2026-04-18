@@ -2,22 +2,15 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
-const disableHmr = process.env.VITE_DISABLE_HMR === 'true';
-
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     host: 'localhost',
     port: 5173,
     strictPort: true,
-    hmr: disableHmr
-      ? false
-      : {
-          protocol: 'ws',
-          host: '127.0.0.1',
-          port: 5173,
-          clientPort: 5173
-        },
+    // HMR websocket is disabled by default because some local/proxied
+    // environments block WS upgrade and spam browser console errors.
+    hmr: false,
     watch: {
       usePolling: true,
       interval: 100
