@@ -92,6 +92,18 @@ npm --prefix client test -- --run
 - SMS/email adapters attempt real providers if credentials are present.
 - Without credentials, sends are simulated and logged in `MessageLog`.
 
+
+## Vite HMR WebSocket Troubleshooting
+If Chrome DevTools shows `failed to connect to websocket` for Vite HMR, this repo is configured to force a stable local HMR endpoint:
+- Vite binds to `0.0.0.0:5173`
+- HMR client connects to `ws://localhost:5173`
+- polling file watch is enabled for container/VM environments
+
+If your setup still fails, ensure:
+- port `5173` is open and not used by another process
+- you are opening the app at `http://localhost:5173` (not a different host)
+- no proxy is stripping WebSocket upgrade headers
+
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
 - Set environment variables from `server/.env.example`.
