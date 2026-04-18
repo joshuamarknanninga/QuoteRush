@@ -4,7 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run dev:stable",
+    "dev:stable": "sh -c 'vite build --watch --mode development & vite preview --host localhost --port 5173 --strictPort'",
+    "dev:hmr": "vite --host localhost --port 5173 --strictPort",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest"
