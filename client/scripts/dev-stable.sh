@@ -5,6 +5,10 @@ set -euo pipefail
 pkill -f "vite.*--host localhost --port 5173" >/dev/null 2>&1 || true
 pkill -f "vite" >/dev/null 2>&1 || true
 
+# Ensure dist is freshly generated before preview starts.
+npx vite build --mode development
+
+# Keep rebuilding on file changes in the background.
 npx vite build --watch --mode development &
 BUILD_PID=$!
 
