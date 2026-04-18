@@ -14,8 +14,8 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <section className="mx-auto max-w-6xl px-4 py-14">
+    <div className="min-h-screen bg-transparent">
+      <section className="mx-auto max-w-6xl rounded-3xl bg-gradient-to-br from-indigo-50 via-sky-50 to-white px-6 py-14 shadow-sm">
         <h1 className="text-4xl font-bold tracking-tight text-slate-900 md:text-5xl">Quote requests to booked jobs, fast.</h1>
         <p className="mt-4 max-w-2xl text-lg text-slate-600">QuoteRush helps local service businesses capture leads, follow up, and stay organized.</p>
         <div className="mt-8 flex gap-3">

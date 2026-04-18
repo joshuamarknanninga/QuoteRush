@@ -42,7 +42,7 @@ npm run dev:reset
 ```
 - API: `http://localhost:5000`
 - Frontend (default stable mode): `http://localhost:4173`
-- Client default dev mode is websocket-free (stable mode), so refresh manually after edits.
+- Client default dev mode is websocket-free (stable mode), serves built assets, and proxies `/api` to `http://localhost:5000` to avoid browser CORS issues.
 
 ## Seed Demo Data
 ```bash
@@ -102,9 +102,10 @@ npm --prefix client test -- --run
 If your machine keeps failing Vite websocket (`[vite] failed to connect to websocket`), this repo now defaults to a websocket-free client dev flow on a different port than Vite HMR defaults.
 
 Default (`npm run dev`):
-- Runs one fresh `vite build` first, then `vite build --watch` + `vite preview` through `client/scripts/dev-stable.sh`
-- Kills stale local Vite processes before startup to avoid old HMR sessions
+- Runs one fresh `vite build`, then `vite build --watch` plus a local proxy server (`client/scripts/stable-proxy-server.cjs`)
+- Kills stale local stable-mode processes before startup
 - No HMR socket required
+- API calls use same-origin `/api` and are proxied to backend
 - Manual browser refresh after file changes
 
 If you want normal HMR on a machine where websocket works:
@@ -123,7 +124,7 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - Deploy `server` as Web Service with `npm start`.
 - Set environment variables from `server/.env.example`.
 - Deploy `client` as Static Site with `npm run build` and publish `dist/`.
-- Configure `VITE_API_URL` in client environment to deployed API URL.
+- Configure `VITE_API_URL` in client environment (default local is `/api` with stable proxy mode).
 - API CORS currently reflects incoming request origins (`origin: true`) with credentials enabled; lock this down for production domains if needed.
 
 ## Manual QA Checklist

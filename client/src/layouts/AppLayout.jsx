@@ -12,7 +12,7 @@ export default function AppLayout() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-transparent">
       <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <Link to="/app/dashboard" className="text-lg font-semibold text-slate-900">QuoteRush</Link>
