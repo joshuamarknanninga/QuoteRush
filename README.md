@@ -94,18 +94,21 @@ npm --prefix client test -- --run
 
 
 ## Vite HMR WebSocket Troubleshooting
-To stop repeated Vite websocket errors in local Chrome DevTools, this project now runs client dev with HMR channel disabled.
+If Chrome shows `[vite] failed to connect to websocket`, use the same host for both page URL and HMR host.
 
-Current behavior:
-- Client runs on `http://127.0.0.1:5173`
-- Fast Refresh/HMR websocket is disabled
-- File watch polling is enabled
-- Manual browser refresh is required after code edits
-
-Start client with:
+1. Copy env and keep hosts aligned:
 ```bash
-npm --prefix client run dev
+cp client/.env.example client/.env
 ```
+2. Start the app:
+```bash
+npm run dev
+```
+3. Open exactly:
+- `http://localhost:5173` when `VITE_DEV_HOST=localhost`
+- `http://127.0.0.1:5173` only if you also set `VITE_DEV_HOST=127.0.0.1` and `VITE_HMR_HOST=127.0.0.1`
+
+Default local values in `client/.env.example` keep both HTTP and WebSocket on `localhost:5173`.
 
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.

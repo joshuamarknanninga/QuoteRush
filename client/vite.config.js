@@ -2,17 +2,23 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
-const devHost = '127.0.0.1';
-const devPort = 5173;
+const devHost = process.env.VITE_DEV_HOST || 'localhost';
+const devPort = Number(process.env.VITE_DEV_PORT || 5173);
 
 export default defineConfig({
-  // Disable Fast Refresh to avoid websocket HMR channel in constrained local networks.
-  plugins: [react({ fastRefresh: false }), tailwindcss()],
+  plugins: [react(), tailwindcss()],
   server: {
     host: devHost,
     port: devPort,
     strictPort: true,
-    hmr: false,
+    hmr: {
+      protocol: 'ws',
+      host: process.env.VITE_HMR_HOST || devHost,
+      port: Number(process.env.VITE_HMR_PORT || devPort),
+      clientPort: Number(process.env.VITE_HMR_CLIENT_PORT || devPort),
+      timeout: 120000,
+      overlay: true
+    },
     watch: {
       usePolling: true,
       interval: 100
