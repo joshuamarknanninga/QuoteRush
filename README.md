@@ -98,7 +98,8 @@ npm --prefix client test -- --run
 If your machine keeps failing Vite websocket (`[vite] failed to connect to websocket`), this repo now defaults to a websocket-free client dev flow.
 
 Default (`npm run dev`):
-- Runs `vite build --watch` + `vite preview`
+- Runs `vite build --watch` + `vite preview` through `client/scripts/dev-stable.sh`
+- Kills stale local Vite processes before startup to avoid old HMR sessions
 - No HMR socket required
 - Manual browser refresh after file changes
 
@@ -108,6 +109,11 @@ npm --prefix client run dev:hmr
 ```
 
 If you previously had stuck browser tabs, close old tabs and reopen `http://localhost:5173`.
+
+Quick verification (should return nothing):
+```bash
+curl -s http://localhost:5173 | rg "@vite/client"
+```
 
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
