@@ -94,15 +94,20 @@ npm --prefix client test -- --run
 
 
 ## Vite HMR WebSocket Troubleshooting
-If Chrome DevTools shows `failed to connect to websocket` for Vite HMR, this repo is configured to force a stable local HMR endpoint:
-- Vite binds to `0.0.0.0:5173`
-- HMR client connects to `ws://localhost:5173`
+If Chrome DevTools shows `failed to connect to websocket` for Vite HMR, this repo is configured to use a fixed local endpoint:
+- Vite binds to `localhost:5173`
+- HMR client connects to `ws://127.0.0.1:5173`
 - polling file watch is enabled for container/VM environments
 
 If your setup still fails, ensure:
 - port `5173` is open and not used by another process
-- you are opening the app at `http://localhost:5173` (not a different host)
-- no proxy is stripping WebSocket upgrade headers
+- you are opening the app at `http://localhost:5173`
+- no local proxy/VPN is stripping WebSocket upgrade headers
+
+Fallback (disables HMR websocket and removes the browser console error):
+```bash
+VITE_DISABLE_HMR=true npm --prefix client run dev
+```
 
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
