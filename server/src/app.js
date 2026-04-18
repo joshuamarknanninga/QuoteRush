@@ -14,6 +14,9 @@ const { notFound, errorHandler } = require('./middleware/errorHandler');
 
 const app = express();
 
+
+const localhostOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
 const corsOptions = {
   origin(origin, callback) {
     if (!origin) {
@@ -21,6 +24,10 @@ const corsOptions = {
     }
 
     if (env.nodeEnv === 'development') {
+      return callback(null, true);
+    }
+
+    if (localhostOriginPattern.test(origin)) {
       return callback(null, true);
     }
 
