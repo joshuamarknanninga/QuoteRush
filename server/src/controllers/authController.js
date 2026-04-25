@@ -32,7 +32,7 @@ const register = async (req, res, next) => {
 
     return res.status(201).json(
       successResponse('Registered successfully', {
-        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role }
+        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role, subscriptionStatus: user.subscriptionStatus }
       })
     );
   } catch (error) {
@@ -59,7 +59,7 @@ const login = async (req, res, next) => {
 
     return res.json(
       successResponse('Logged in successfully', {
-        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role }
+        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role, subscriptionStatus: user.subscriptionStatus }
       })
     );
   } catch (error) {
@@ -73,7 +73,16 @@ const logout = async (_req, res) => {
 };
 
 const me = async (req, res) => {
-  return res.json(successResponse('User fetched', { user: req.user }));
+  return res.json(successResponse('User fetched', {
+    user: {
+      id: req.user._id,
+      name: req.user.name,
+      email: req.user.email,
+      businessName: req.user.businessName,
+      role: req.user.role,
+      subscriptionStatus: req.user.subscriptionStatus
+    }
+  }));
 };
 
 module.exports = {

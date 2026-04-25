@@ -120,6 +120,13 @@ Quick verification (should return nothing):
 curl -s http://localhost:4173 | rg "@vite/client"
 ```
 
+
+## Stripe Billing (MVP)
+- `POST /billing/checkout-session` (auth) creates a Stripe Checkout session for subscriptions.
+- `POST /billing/portal-session` (auth) creates a Stripe Billing Portal session.
+- `POST /billing/webhook` (public) syncs `subscriptionStatus` from Stripe events.
+- If Stripe env vars are not configured, billing endpoints return simulated URLs so local testing still works.
+
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
 - Set environment variables from `server/.env.example`.

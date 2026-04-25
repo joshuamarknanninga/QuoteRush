@@ -32,5 +32,12 @@ module.exports = {
     pass: process.env.SMTP_PASS,
     from: process.env.SMTP_FROM
   },
+  stripe: {
+    secretKey: process.env.STRIPE_SECRET_KEY,
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    priceId: process.env.STRIPE_PRICE_ID,
+    successUrl: process.env.STRIPE_SUCCESS_URL,
+    cancelUrl: process.env.STRIPE_CANCEL_URL
+  },
   automationPollMs: Number(process.env.AUTOMATION_POLL_MS) || 15000
 };

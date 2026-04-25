@@ -17,7 +17,8 @@ const seed = async () => {
     businessName: 'Rush Detail Co',
     email: 'demo@quoterush.app',
     passwordHash,
-    role: 'owner'
+    role: 'owner',
+    subscriptionStatus: 'active'
   });
 
   await BusinessSettings.create({

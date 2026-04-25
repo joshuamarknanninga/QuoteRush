@@ -21,6 +21,7 @@ const connectWithRetry = async () => {
     setTimeout(connectWithRetry, DB_RETRY_MS);
   }
 };
+
 app.listen(env.port, () => {
   console.log(`Server running on port ${env.port}`);
   connectWithRetry();
