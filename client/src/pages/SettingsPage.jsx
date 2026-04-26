@@ -18,6 +18,7 @@ export default function SettingsPage() {
   const [msg, setMsg] = useState('');
   const [billingMsg, setBillingMsg] = useState('');
   const [billingLoading, setBillingLoading] = useState(false);
+  const trialEndsAtLabel = user?.trialEndsAt ? new Date(user.trialEndsAt).toLocaleDateString() : null;
 
   useEffect(() => {
     api.get('/settings').then((res) => {
@@ -93,9 +94,17 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="text-lg font-semibold">Billing</h2>
-        <p className="mt-1 text-sm text-slate-600">
-          Subscription status: <span className="font-medium uppercase">{user?.subscriptionStatus || 'trialing'}</span>
-        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+          <span>Subscription status:</span>
+          <span className="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold uppercase tracking-wide text-slate-700">
+            {user?.subscriptionStatus || 'trialing'}
+          </span>
+          {trialEndsAtLabel && user?.subscriptionStatus === 'trialing' && (
+            <span className="rounded-full bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-indigo-200">
+              Trial ends {trialEndsAtLabel}
+            </span>
+          )}
+        </div>
         <div className="mt-4 flex flex-wrap gap-2">
           <Button type="button" onClick={startCheckout} disabled={billingLoading}>Start subscription</Button>
           <Button type="button" variant="secondary" onClick={openPortal} disabled={billingLoading}>Open billing portal</Button>
