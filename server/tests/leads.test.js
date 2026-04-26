@@ -1,6 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const User = require('../src/models/User');
 
 let app;
 let mongod;
@@ -65,5 +66,15 @@ describe('Lead CRUD routes', () => {
   test('deletes lead', async () => {
     const res = await request(app).delete(`/api/leads/${leadId}`).set('Cookie', cookie);
     expect(res.statusCode).toBe(200);
+  });
+
+  test('blocks access after trial expires', async () => {
+    await User.findOneAndUpdate(
+      { email: 'lead@example.com' },
+      { $set: { subscriptionStatus: 'trialing', trialEndsAt: new Date(Date.now() - 60_000) } }
+    );
+
+    const res = await request(app).get('/api/leads').set('Cookie', cookie);
+    expect(res.statusCode).toBe(402);
   });
 });
