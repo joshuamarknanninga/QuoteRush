@@ -32,7 +32,15 @@ const register = async (req, res, next) => {
 
     return res.status(201).json(
       successResponse('Registered successfully', {
-        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role, subscriptionStatus: user.subscriptionStatus }
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          businessName: user.businessName,
+          role: user.role,
+          subscriptionStatus: user.subscriptionStatus,
+          trialEndsAt: user.trialEndsAt
+        }
       })
     );
   } catch (error) {
@@ -59,7 +67,15 @@ const login = async (req, res, next) => {
 
     return res.json(
       successResponse('Logged in successfully', {
-        user: { id: user._id, name: user.name, email: user.email, businessName: user.businessName, role: user.role, subscriptionStatus: user.subscriptionStatus }
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          businessName: user.businessName,
+          role: user.role,
+          subscriptionStatus: user.subscriptionStatus,
+          trialEndsAt: user.trialEndsAt
+        }
       })
     );
   } catch (error) {
@@ -80,7 +96,8 @@ const me = async (req, res) => {
       email: req.user.email,
       businessName: req.user.businessName,
       role: req.user.role,
-      subscriptionStatus: req.user.subscriptionStatus
+      subscriptionStatus: req.user.subscriptionStatus,
+      trialEndsAt: req.user.trialEndsAt
     }
   }));
 };

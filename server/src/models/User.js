@@ -1,4 +1,12 @@
 const mongoose = require('mongoose');
+const env = require('../config/env');
+
+const getDefaultTrialEndDate = () => {
+  const days = Math.max(0, env.trialDays || 14);
+  const trialEndDate = new Date();
+  trialEndDate.setUTCDate(trialEndDate.getUTCDate() + days);
+  return trialEndDate;
+};
 
 const userSchema = new mongoose.Schema(
   {
@@ -12,6 +20,7 @@ const userSchema = new mongoose.Schema(
       enum: ['trialing', 'active', 'past_due', 'canceled', 'incomplete'],
       default: 'trialing'
     },
+    trialEndsAt: { type: Date, default: getDefaultTrialEndDate },
     stripeCustomerId: { type: String, default: null },
     stripeSubscriptionId: { type: String, default: null }
   },
