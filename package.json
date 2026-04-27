@@ -7,6 +7,7 @@
     "dev": "concurrently \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "test": "npm --prefix server test && npm --prefix client test -- --run",
     "seed": "npm --prefix server run seed",
+    "demo": "npm run seed && npm run dev",
     "dev:reset": "bash -lc 'pkill -f \"node src/server.js\" >/dev/null 2>&1 || true; pkill -f \"node ./scripts/stable-proxy-server.cjs\" >/dev/null 2>&1 || true; pkill -f \"vite build --watch --mode development\" >/dev/null 2>&1 || true; npm run dev'"
   },
   "devDependencies": {

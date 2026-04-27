@@ -52,6 +52,15 @@ Demo login:
 - Email: `demo@quoterush.app`
 - Password: `DemoPass123!`
 
+## Demo / Recording Flow
+For a clean environment before filming:
+```bash
+npm run demo
+```
+- This reseeds demo data and starts client/server together.
+- Open `http://localhost:4173` and login using the demo credentials above.
+- The seeded demo owner is set to `subscriptionStatus: active`, so paid routes are accessible for walkthroughs.
+
 ## Testing
 Run all tests:
 ```bash
@@ -125,7 +134,9 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - `POST /billing/checkout-session` (auth) creates a Stripe Checkout session for subscriptions.
 - `POST /billing/portal-session` (auth) creates a Stripe Billing Portal session.
 - `POST /billing/webhook` (public) syncs `subscriptionStatus` from Stripe events.
-- If Stripe env vars are not configured, billing endpoints return simulated URLs so local testing still works.
+- In `development`, if Stripe env vars are not configured, billing endpoints return simulated URLs so local testing still works.
+- In `production`, Stripe misconfiguration returns `503` for billing endpoints.
+- Trial access is controlled by `TRIAL_DAYS` (default `14`) and enforced via `trialEndsAt`.
 
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
@@ -133,6 +144,12 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - Deploy `client` as Static Site with `npm run build` and publish `dist/`.
 - Configure `VITE_API_URL` in client environment (default local is `/api` with stable proxy mode).
 - API CORS currently reflects incoming request origins (`origin: true`) with credentials enabled; lock this down for production domains if needed.
+
+### Login 403 Troubleshooting
+If `POST /api/auth/login` returns `403` in browser devtools:
+- Your frontend is usually calling the wrong host for `/api` (common on static deployments).
+- Set `VITE_API_URL` to your backend origin + `/api` (example: `https://your-api-domain.com/api`).
+- For local demo flow (`npm run demo`), keep `VITE_API_URL=/api` so the stable proxy can forward requests to `http://localhost:5000`.
 
 ## Manual QA Checklist
 - Register and login.
