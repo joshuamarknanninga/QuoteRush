@@ -145,6 +145,12 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - Configure `VITE_API_URL` in client environment (default local is `/api` with stable proxy mode).
 - API CORS currently reflects incoming request origins (`origin: true`) with credentials enabled; lock this down for production domains if needed.
 
+### Login 403 Troubleshooting
+If `POST /api/auth/login` returns `403` in browser devtools:
+- Your frontend is usually calling the wrong host for `/api` (common on static deployments).
+- Set `VITE_API_URL` to your backend origin + `/api` (example: `https://your-api-domain.com/api`).
+- For local demo flow (`npm run demo`), keep `VITE_API_URL=/api` so the stable proxy can forward requests to `http://localhost:5000`.
+
 ## Manual QA Checklist
 - Register and login.
 - Create, edit, and delete leads.

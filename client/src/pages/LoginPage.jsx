@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
+  const [debugHint, setDebugHint] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -17,13 +18,22 @@ export default function LoginPage() {
       await login(form.email, form.password);
       navigate('/app/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const status = err.response?.status;
+      const apiMessage = err.response?.data?.message;
+      setError(apiMessage || `Login failed${status ? ` (${status})` : ''}`);
+
+      if (status === 403) {
+        setDebugHint('403 usually means the frontend is not reaching your backend API. Check VITE_API_URL and your proxy/deploy config.');
+      } else {
+        setDebugHint('');
+      }
     }
   };
 
   const useDemoCredentials = () => {
     setForm({ email: 'demo@quoterush.app', password: 'DemoPass123!' });
     setError('');
+    setDebugHint('');
   };
 
   return (
@@ -35,6 +45,7 @@ export default function LoginPage() {
           <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           <Input label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />
           {error && <p className="text-sm text-red-600">{error}</p>}
+          {debugHint && <p className="text-sm text-amber-700">{debugHint}</p>}
           <button
             type="button"
             onClick={useDemoCredentials}
