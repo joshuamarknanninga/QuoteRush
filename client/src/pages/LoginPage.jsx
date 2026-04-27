@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [debugHint, setDebugHint] = useState('');
-  const { login } = useAuth();
+  const { login, startDemo } = useAuth();
   const navigate = useNavigate();
 
   const submit = async (e) => {
@@ -36,11 +36,36 @@ export default function LoginPage() {
     setDebugHint('');
   };
 
+  const startInstantDemo = async () => {
+    setError('');
+    setDebugHint('');
+    try {
+      await startDemo();
+      navigate('/app/dashboard');
+    } catch (err) {
+      const status = err.response?.status;
+      setError(err.response?.data?.message || `Unable to start demo${status ? ` (${status})` : ''}`);
+    }
+  };
+
+  const useDemoCredentials = () => {
+    setForm({ email: 'demo@quoterush.app', password: 'DemoPass123!' });
+    setError('');
+    setDebugHint('');
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <Card className="w-full max-w-md">
         <h1 className="text-xl font-semibold">Login</h1>
         <p className="mt-1 text-sm text-slate-600">Want to record a demo? Use the pre-seeded demo account.</p>
+        <button
+          type="button"
+          onClick={startInstantDemo}
+          className="mt-3 w-full rounded-lg bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-700"
+        >
+          Start instant demo
+        </button>
         <form onSubmit={submit} className="mt-4 space-y-3">
           <Input label="Email" type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
           <Input label="Password" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} required />

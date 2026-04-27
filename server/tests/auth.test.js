@@ -45,4 +45,14 @@ describe('Auth routes', () => {
     expect(res.body.success).toBe(true);
     expect(res.headers['set-cookie']).toBeTruthy();
   });
+
+  test('starts demo session in non-production', async () => {
+    const res = await request(app).post('/api/auth/demo-login').send({});
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data.user.email).toBe('demo@quoterush.app');
+    expect(res.body.data.user.subscriptionStatus).toBe('active');
+    expect(res.headers['set-cookie']).toBeTruthy();
+  });
 });

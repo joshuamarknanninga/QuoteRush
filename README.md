@@ -58,7 +58,8 @@ For a clean environment before filming:
 npm run demo
 ```
 - This reseeds demo data and starts client/server together.
-- Open `http://localhost:4173` and login using the demo credentials above.
+- Open `http://localhost:4173/login` and click **Start instant demo** (auto-initializes active demo user/session in non-production).
+- You can still manually login using the demo credentials above if preferred.
 - The seeded demo owner is set to `subscriptionStatus: active`, so paid routes are accessible for walkthroughs.
 
 ## Testing
