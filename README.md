@@ -53,6 +53,11 @@ Demo login:
 - Password: `DemoPass123!`
 
 ## Demo / Recording Flow
+If this is your first run in a fresh clone, install deps first:
+```bash
+npm run install:all
+```
+
 For a clean environment before filming:
 ```bash
 npm run demo
