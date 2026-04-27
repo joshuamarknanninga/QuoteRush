@@ -52,6 +52,15 @@ Demo login:
 - Email: `demo@quoterush.app`
 - Password: `DemoPass123!`
 
+## Demo / Recording Flow
+For a clean environment before filming:
+```bash
+npm run demo
+```
+- This reseeds demo data and starts client/server together.
+- Open `http://localhost:4173` and login using the demo credentials above.
+- The seeded demo owner is set to `subscriptionStatus: active`, so paid routes are accessible for walkthroughs.
+
 ## Testing
 Run all tests:
 ```bash
@@ -125,7 +134,9 @@ curl -s http://localhost:4173 | rg "@vite/client"
 - `POST /billing/checkout-session` (auth) creates a Stripe Checkout session for subscriptions.
 - `POST /billing/portal-session` (auth) creates a Stripe Billing Portal session.
 - `POST /billing/webhook` (public) syncs `subscriptionStatus` from Stripe events.
-- If Stripe env vars are not configured, billing endpoints return simulated URLs so local testing still works.
+- In `development`, if Stripe env vars are not configured, billing endpoints return simulated URLs so local testing still works.
+- In `production`, Stripe misconfiguration returns `503` for billing endpoints.
+- Trial access is controlled by `TRIAL_DAYS` (default `14`) and enforced via `trialEndsAt`.
 
 ## Deployment Notes (Render/Railway)
 - Deploy `server` as Web Service with `npm start`.
