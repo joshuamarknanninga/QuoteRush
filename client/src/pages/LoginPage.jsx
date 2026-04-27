@@ -48,6 +48,12 @@ export default function LoginPage() {
     }
   };
 
+  const useDemoCredentials = () => {
+    setForm({ email: 'demo@quoterush.app', password: 'DemoPass123!' });
+    setError('');
+    setDebugHint('');
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
       <Card className="w-full max-w-md">
