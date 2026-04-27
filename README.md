@@ -52,6 +52,15 @@ Demo login:
 - Email: `demo@quoterush.app`
 - Password: `DemoPass123!`
 
+## Demo / Recording Flow
+For a clean environment before filming:
+```bash
+npm run demo
+```
+- This reseeds demo data and starts client/server together.
+- Open `http://localhost:4173` and login using the demo credentials above.
+- The seeded demo owner is set to `subscriptionStatus: active`, so paid routes are accessible for walkthroughs.
+
 ## Testing
 Run all tests:
 ```bash
