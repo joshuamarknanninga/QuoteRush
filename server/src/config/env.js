@@ -39,5 +39,6 @@ module.exports = {
     successUrl: process.env.STRIPE_SUCCESS_URL,
     cancelUrl: process.env.STRIPE_CANCEL_URL
   },
+  trialDays: Number(process.env.TRIAL_DAYS) || 14,
   automationPollMs: Number(process.env.AUTOMATION_POLL_MS) || 15000
 };

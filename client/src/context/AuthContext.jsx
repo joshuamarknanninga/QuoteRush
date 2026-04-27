@@ -37,7 +37,12 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
-  const value = useMemo(() => ({ user, loading, login, register, logout, refreshUser: fetchMe }), [user, loading]);
+  const startDemo = async () => {
+    const res = await api.post('/auth/demo-login');
+    setUser(res.data.data.user);
+  };
+
+  const value = useMemo(() => ({ user, loading, login, register, logout, startDemo, refreshUser: fetchMe }), [user, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

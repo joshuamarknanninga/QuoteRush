@@ -29,6 +29,10 @@ const createCheckoutSession = async (req, res, next) => {
     const user = await User.findById(req.user._id);
 
     if (!isStripeConfigured()) {
+      if (env.nodeEnv === 'production') {
+        return res.status(503).json(errorResponse('Stripe is not configured for this environment.'));
+      }
+
       return res.json(successResponse('Stripe is not configured. Returning simulated checkout URL.', {
         checkoutUrl: `${env.clientUrl}/app/settings?billing=simulated`
       }));
@@ -56,6 +60,10 @@ const createBillingPortalSession = async (req, res, next) => {
     const user = await User.findById(req.user._id);
 
     if (!isStripeConfigured() || !user.stripeCustomerId) {
+      if (env.nodeEnv === 'production') {
+        return res.status(503).json(errorResponse('Stripe billing portal is unavailable.'));
+      }
+
       return res.json(successResponse('Stripe billing portal unavailable. Returning simulated URL.', {
         portalUrl: `${env.clientUrl}/app/settings?billing=portal-simulated`
       }));
